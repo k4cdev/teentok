@@ -36,7 +36,7 @@ export const MentorGridItem = ( { mentor }: Props ) => {
           className="hover:text-blue-600"
           href={ `/mentor/${ mentor.slug }` }>
           
-          <span className="font-bold">{ mentor.name }</span>
+          <span className="font-bold capitalize ">{ mentor.name }</span>
         </Link>
         {`${ mentor.role } at ${ mentor.job }`}
       </div>
