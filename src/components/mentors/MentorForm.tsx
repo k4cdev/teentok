@@ -1,7 +1,7 @@
 'use client';
 
 import { Mentor } from '@/interfaces';
-import useMentorStore from '@/store/store';
+import useMentorStore from '@/stores/store';
 import React from 'react';
 
 const generateSlug = (length: number): string => {

@@ -1,7 +1,13 @@
+"use client"
 import { Mentor } from "@/interfaces";
 import { MentorGridItem } from "./MentorGridItem";
 import MentorForm from "./MentorForm";
 import { MentorsList } from "./MentorList";
+import Clientes from "./Clients";
+import Register from "./Register";
+import useAuthStore from '@/stores/authStore';
+import MostrarContenido from "./Mostrar";
+import CrearClienteFormulario from "./CrearClienteFormulario";
 
 interface Props {
     mentors: Mentor[];
@@ -22,6 +28,14 @@ export const MentorsGrid = ({ mentors }: Props) => {
             } */}
 
             <MentorForm />
+
+            <Clientes />
+
+            <Register />
+
+            <CrearClienteFormulario />
+
+            <MostrarContenido />
 
             <MentorsList mentors={mentors} />
 

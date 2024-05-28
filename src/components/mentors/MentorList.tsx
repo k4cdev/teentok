@@ -2,7 +2,7 @@
 
 import { Mentor } from "@/interfaces";
 import { MentorGridItem } from "./MentorGridItem";
-import useMentorStore from "@/store/store";
+import useMentorStore from "@/stores/store";
 
 export const MentorsList = ({ mentors }: { mentors: Mentor[] }) => {
     // Usa el store de Zustand
