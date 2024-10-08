@@ -1,13 +1,13 @@
 import useAuthStore from '@/stores/authStore';
 import { useRouter } from 'next/navigation';
 
-const useRegister = () => {
-    const router = useRouter();
+const useLogin = () => {
     const setToken = useAuthStore((state) => state.setToken);
+    const router = useRouter();
 
-    const register = async (username: string, password: string) => {
+    const login = async (username: string, password: string) => {
         try {
-            const response = await fetch('http://localhost:9090/auth/register', {
+            const response = await fetch('http://localhost:9090/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -17,15 +17,15 @@ const useRegister = () => {
             const data = await response.json();
             if (data.token) {
                 setToken(data.token);
-                console.log('User registered successfully:', data.token);
-                router.push('/auth/login'); 
+                console.log('User login successfully:', data.token);
+                router.push('/admin');
             }
         } catch (error) {
-            console.error('Error during registration:', error);
+            console.error('Error during login:', error);
         }
     };
 
-    return { register };
+    return { login };
 };
 
-export default useRegister;
+export default useLogin;

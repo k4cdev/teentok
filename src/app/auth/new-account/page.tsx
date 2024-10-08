@@ -1,99 +1,97 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+"use client"
+import { SetStateAction, useState } from 'react';
+import useRegister from '@/hooks/useRegister';
+
+interface AlertMessage {
+  id: number;
+  desc: string;
+}
+
+enum MessageDescription {
+  username = "El nombre de usuario solo puede contener letras y debe tener entre 3 y 15 caracteres.",
+  password = "La contraseña debe tener exactamente 8 caracteres, con al menos una mayúscula, una minúscula, un número y un carácter especial."
+}
+
 export default function Home() {
+
+  const { register } = useRegister();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [alertMessage, setAlertMessage] = useState<AlertMessage[]>([]);
+
+  const handleUsernameChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    const usernameRegex = /^[a-zA-Z]{3,15}$/;
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8}$/;
+
+    let valid = true;
+    const messages: AlertMessage[] = [];
+
+    if (!usernameRegex.test(username)) {
+      messages.push({ id: 0, desc: MessageDescription.username});
+      valid = false;
+    }
+
+    if (!passwordRegex.test(password)) {
+      messages.push({ id: 1, desc: MessageDescription.password});
+      valid = false;
+    }
+
+    setAlertMessage(messages);
+
+    if (valid) {
+      register(username, password);
+    }
+  };
+
+
+
   return (
-    <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+    <div className="fixed inset-0 flex justify-center items-end">
+      <div className="bg-neutral-900 h-3/4 w-full max-w-md p-6 rounded-t-3xl flex justify-center items-center">
+        <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center space-y-4 w-full">
+          <input
+            type="text"
+            className="block w-3/4 h-12 p-2 rounded-full text-gray-900"
+            value={username}
+            onChange={handleUsernameChange}
+            placeholder="Username"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Accelerate your career
-          </h2>
-        </div>
+          <input
+            type="password"
+            className="block w-3/4 h-12 p-2 rounded-full text-gray-900"
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="Password"
+          />
+          <button type="submit" className="bg-yellow-500 w-3/4 h-12 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full">
+            Register
+          </button>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+          {alertMessage.length > 0 && ( // Mostrar solo si hay mensajes
+            <div className="mt-4 p-2 text-red-600 bg-red-100 rounded">
+              <ul>
+                {alertMessage.map(msg => (
+                  <li key={msg.id}>{msg.desc}</li>
+                ))}
+              </ul>
             </div>
+          )}
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not are Teentoker?{' '}
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Get access to our expert community of mentors.
-            </a>
-          </p>
-        </div>
+        </form>
       </div>
-    </>
-  )
+    </div>
+  );
+
+
 }

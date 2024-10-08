@@ -5,7 +5,7 @@ export default function TeentokLayout({
  children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-neutral-950">
         { children }
     </main>
   );
