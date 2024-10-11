@@ -1,13 +1,13 @@
 import { titleFont } from "@/config/fonts";
 import Link from "next/link";
-import { IoCartOutline, IoSearchOutline, IoApps } from "react-icons/io5";
+import { IoLogInOutline } from "react-icons/io5";
 
 export const TopMenu = () => {
   return (
     <nav className="flex justify-between items-center p-5 w-full">
 
       <div>
-        <Link href="/"><span className={`${titleFont.className} antialiased font-bold `}>Teentok</span></Link>
+        <Link href="/"><span className={`${titleFont.className} antialiased font-bold text-2xl `}>Teentok</span></Link>
       </div>
 
 
@@ -19,11 +19,15 @@ export const TopMenu = () => {
 
 
 
-      {/* <div className="flex items-center">
-        <Link href={"/search"} className="mx-2">
-          <IoSearchOutline className="w-5 h-5" />
+      <div className="flex items-center">
+        <Link href="/auth/login" className="inline-flex items-center mx-2">
+          <span className="flex items-center space-x-2 text-base">
+            <span className="text-lg">login</span>
+            <IoLogInOutline className="text-3xl" />
+          </span>
         </Link>
-      </div> */}
+      </div>
+
     </nav>
   );
 }

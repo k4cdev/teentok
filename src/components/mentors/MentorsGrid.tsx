@@ -36,12 +36,10 @@ export const MentorsGrid = ({ mentors }: Props) => {
                 alt="girl mentoring"
             />
 
-            {/* Contenedor del texto (posición absoluta sobre la imagen) */}
             <div className="absolute inset-0 bg-black bg-opacity-25 flex flex-col justify-start items-start text-white px-6 py-4 ">
-                <div className="font-bold text-xl mb-2">Teentok</div>
+                <div className="font-bold text-xl mb-2">Mentors</div>
             </div>
 
-            {/* Etiquetas (puedes dejarlas fuera de la imagen si lo prefieres) */}
             <div className="absolute bottom-4 right-4">
                 <span className="inline-block border border-white text-white hover:bg-yellow-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold transition-colors duration-300">
                     Explore All
