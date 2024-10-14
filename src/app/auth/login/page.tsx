@@ -1,6 +1,7 @@
 "use client"
 import { SetStateAction, useState } from 'react';
 import useLogin from '@/hooks/useLogin';
+import { useRouter } from 'next/navigation';
 
 interface AlertMessage {
   id: number;
@@ -18,6 +19,7 @@ export default function Home() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [alertMessage, setAlertMessage] = useState<AlertMessage[]>([]);
+  const router = useRouter();
 
   const handleUsernameChange = (e: { target: { value: SetStateAction<string>; }; }) => {
     setUsername(e.target.value);
@@ -51,6 +53,7 @@ export default function Home() {
 
     if (valid) {
       login(username, password);
+      router.push('/');
     }
   };
 

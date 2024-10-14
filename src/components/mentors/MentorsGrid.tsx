@@ -9,6 +9,7 @@ import useAuthStore from '@/stores/authStore';
 import MostrarContenido from "./Mostrar";
 import CrearClienteFormulario from "./CrearClienteFormulario";
 import Image from 'next/image'
+import Link from "next/link";
 
 interface Props {
     mentors: Mentor[];
@@ -41,9 +42,11 @@ export const MentorsGrid = ({ mentors }: Props) => {
             </div>
 
             <div className="absolute bottom-4 right-4">
-                <span className="inline-block border border-white text-white hover:bg-yellow-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold transition-colors duration-300">
-                    Explore All
-                </span>
+                <Link href="/mentors">
+                    <span className="inline-block border border-white text-white bg-blue-700 hover:text-white rounded-full px-3 py-1 text-sm font-semibold transition-colors duration-300">
+                        Explore All
+                    </span>
+                </Link>
             </div>
         </div>
     )

@@ -1,25 +1,34 @@
 import create from 'zustand';
 
 interface AuthState {
-    token: string | null;
-    setToken: (token: string) => void;
+  token: string | null;
+  setToken: (token: string) => void;
+  initializeToken: () => void;
 }
 
-// const useAuthStore = create<AuthState>((set) => ({
-//     token: null,
-//     setToken: (token) => set({ token }),
-// }));
-
 const useAuthStore = create<AuthState>((set) => ({
-    token: sessionStorage.getItem('token') ?? null, // Obtener el token de SessionStorage al inicializar el store
-    setToken: (token) => {
-      set({ token }); // Actualizar el estado interno del store
+  token: null, // Inicializa el token como null
+  setToken: (token) => {
+    set({ token });
+    // Manejo de cookies directamente
+    if (typeof window !== 'undefined') {
       if (token) {
-        sessionStorage.setItem('token', token); // Guardar el token en SessionStorage al establecerlo
+        document.cookie = `token=${token}; path=/`; // Guardar en cookies
       } else {
-        sessionStorage.removeItem('token'); // Eliminar el token de SessionStorage si es null
+        document.cookie = `token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`; // Remover cookie
       }
-    },
-  }));
+    }
+  },
+  initializeToken: () => {
+    if (typeof window !== 'undefined') {
+      const cookieArray = document.cookie.split('; ');
+      const storedToken = cookieArray.find(row => row.startsWith('token='));
+      if (storedToken) {
+        const tokenValue = storedToken.split('=')[1]; // Extraer el valor del token
+        set({ token: tokenValue }); // Si hay un token almacenado, setéalo
+      }
+    }
+  },
+}));
 
 export default useAuthStore;

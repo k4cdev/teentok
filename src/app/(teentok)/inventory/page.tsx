@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import useAuthStore from '@/stores/authStore';
 
-export default function MentorsPage() {
+export default function InventoryPage() {
   const { token, initializeToken } = useAuthStore();
   const [loading, setLoading] = useState(true);
 
@@ -23,7 +23,7 @@ export default function MentorsPage() {
 
   return (
     <div>
-      <h1>Mentors Page {token ? 'Logged in' : 'Not logged in'}</h1>
+      <h1>Inventory Page {token ? 'Logged in' : 'Not logged in'}</h1>
     </div>
   );
 }

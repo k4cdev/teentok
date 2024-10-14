@@ -17,8 +17,9 @@ const useLogin = () => {
             const data = await response.json();
             if (data.token) {
                 setToken(data.token);
+                document.cookie = `token=${data.token}; path=/`;
                 console.log('User login successfully:', data.token);
-                router.push('/admin');
+                router.push('/');
             }
         } catch (error) {
             console.error('Error during login:', error);
